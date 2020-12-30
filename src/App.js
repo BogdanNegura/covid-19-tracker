@@ -15,6 +15,7 @@ const App= () => {
   const [tableData, setTableData] =  useState([])
   const [mapCenter, setMapCenter] =  useState({ lat: 34.80746, lng: -40.4796 })
   const [mapZoom, setMapZoom] =  useState(3)
+  const [mapCountries, setMapCountries] =  useState([])
 
   useEffect(() => {
     fetch("https://disease.sh/v3/covid-19/all")
@@ -36,6 +37,7 @@ const App= () => {
 
         const sortedData = sortData(data)
         setTableData(sortedData)
+        setMapCountries(data)
         setCountries(countries)
       })
     }
@@ -54,8 +56,9 @@ const App= () => {
         .then(response => response.json())
         .then(data => {
           setCountry(countryCode)
-          // All of the data from the country response
           setCountryInfo(data)
+          setMapCenter([data.countryInfo.lat, data.countryInfo.long])
+          setMapZoom(4)
         })
   }
   return (
@@ -92,6 +95,7 @@ const App= () => {
           />
           </div>
         <Map
+          countries={mapCountries}
           center={mapCenter}
           zoom={mapZoom}
         />
