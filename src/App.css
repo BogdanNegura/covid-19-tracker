@@ -43,6 +43,11 @@ body {
   flex-grow: 1;
 }
 
+.app__graphTitle {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
 .app__left {
   flex: 0.9;
 }
