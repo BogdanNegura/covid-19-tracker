@@ -46,20 +46,20 @@ const App= () => {
 
   const onCountryChange = async (event) => {
     const countryCode = event.target.value
-    setCountry(countryCode)
+    
+    const url = 
+      countryCode === "worldwide" 
+        ? "https://disease.sh/v3/covid-19/all" 
+        : `https://disease.sh/v3/covid-19/countries/${countryCode}`
 
-    const url = countryCode === "worldwide" 
-      ? "https://disease.sh/v3/covid-19/all" 
-      : `https://disease.sh/v3/covid-19/countries/${countryCode}`
-
-      await fetch(url)
-        .then(response => response.json())
-        .then(data => {
-          setCountry(countryCode)
-          setCountryInfo(data)
-          setMapCenter([data.countryInfo.lat, data.countryInfo.long])
-          setMapZoom(4)
-        })
+    await fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        setCountry(countryCode)
+        setCountryInfo(data)
+        setMapCenter([data.countryInfo.lat, data.countryInfo.long])
+        setMapZoom(4)
+      })
   }
   return (
     <div className="app">
